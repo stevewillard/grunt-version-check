@@ -57,7 +57,8 @@ module.exports = function(grunt) {
             dependencyCalls = [];
 
         var options = this.options({
-            skip : []
+            skip : [],
+            hideUpToDate: false
         });
 
         var allDependencies = componentFileToMetadatas("bower", readFile(grunt, "bower.json"))
@@ -108,15 +109,21 @@ module.exports = function(grunt) {
             }
         });
 
+        function sortFunc(dep) {
+            return dep.name.toLowerCase;
+        }
+
         npm.load({}, function() {
             async.parallel(dependencyCalls, function(err, results) {
-                _.each(results, function(result) {
+                _.each(_.sortBy(results, sortFunc), function(result) {
                     if (!result.upToDate) {
                         grunt.log.warn(result.name +
                             (" (" + result.type + ")" + " is out of date. Your version: " +
                                     result.version + " latest: " + result.latest).yellow);
                     } else {
-                        grunt.log.ok(result.name + (" (" + result.type + ")" + " is up to date.").green);
+                        if (!options.hideUpToDate) {
+                            grunt.log.ok(result.name + (" (" + result.type + ")" + " is up to date.").green);
+                        }
                     }
                 });
                 // Return the logger to its normal state

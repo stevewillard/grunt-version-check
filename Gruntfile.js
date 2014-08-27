@@ -18,7 +18,8 @@ module.exports = function(grunt) {
 
         versioncheck : {
             options : {
-                skip : ["semver"]
+                skip : ["semver"],
+                hideUpToDate : false
             }
         }
     });
