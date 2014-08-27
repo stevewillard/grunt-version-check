@@ -26,7 +26,8 @@ In your project's Gruntfile, add a section named `versioncheck` to the data obje
 grunt.initConfig({
   versioncheck: {
     options: {
-      skip : ["semver", "npm", "lodash"]
+      skip : ["semver", "npm", "lodash"],
+      hideUpToDate : false
     }
   },
 });
@@ -40,6 +41,11 @@ Default value: `[]`
 
 A list of dependencies to skip.
 
+#### options.hideUpToDate
+Type: `Boolean`
+Default value: `false`
+
+If true, only dependencies that are out of date will be listed.
 
 ### Example output
 ```
