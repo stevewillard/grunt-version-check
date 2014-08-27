@@ -1,4 +1,4 @@
-# grunt-bower-version
+# grunt-version-check
 
 > Checks if your Bower dependencies are out of date.
 
@@ -8,82 +8,71 @@ This plugin requires Grunt `~0.4.5`
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
-npm install grunt-bower-version --save-dev
+npm install grunt-version-check --save-dev
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
 ```js
-grunt.loadNpmTasks('grunt-bower-version');
+grunt.loadNpmTasks('grunt-version-check');
 ```
 
-## The "bower_version" task
+## The "versioncheck" task
 
 ### Overview
-In your project's Gruntfile, add a section named `bower_version` to the data object passed into `grunt.initConfig()`.
+In your project's Gruntfile, add a section named `versioncheck` to the data object passed into `grunt.initConfig()`.
 
 ```js
 grunt.initConfig({
-  bower_version: {
+  versioncheck: {
     options: {
-      // Task-specific options go here.
-    },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
+      skip : ["semver", "npm", "lodash"]
+    }
   },
 });
 ```
 
 ### Options
 
-#### options.separator
-Type: `String`
-Default value: `',  '`
+#### options.skip
+Type: `Array`
+Default value: `[]`
 
-A string value that is used to do something with whatever.
+A list of dependencies to skip.
 
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
 
-A string value that is used to do something else with whatever else.
-
-### Usage Examples
-
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
-
-```js
-grunt.initConfig({
-  bower_version: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
+### Example output
 ```
-
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
-
-```js
-grunt.initConfig({
-  bower_version: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
+Running "versioncheck" task
+>> async (bower) is up to date.
+>> backbone (bower) is up to date.
+>> backbone-pageable (bower) is up to date.
+>> backbone-relational (bower) is out of date. Your version: 0.8.7 latest: 0.8.8
+>> backgrid (bower) is up to date.
+>> backgrid-moment-cell (bower) is up to date.
+>> bootstrap (bower) is up to date.
+>> bootstrap-paginator (bower) is up to date.
+>> d3 (bower) is up to date.
+>> font-awesome (bower) is out of date. Your version: 4.1.0 latest: 4.2.0
+>> highstock-release (bower) is up to date.
+>> i18next (bower) is out of date. Your version: 1.7.3 latest: 1.7.4
+>> jquery (bower) is up to date.
+>> jquery-cookie (bower) is up to date.
+>> jquery.tablesorter (bower) is up to date.
+>> leaflet (bower) is up to date.
+>> leaflet.markercluster (bower) is up to date.
+>> lodash (bower) is up to date.
+>> marionette (bower) is out of date. Your version: 2.0.3 latest: 2.1.0
+>> Marionette.SubRouter (bower) is up to date.
+>> moment (bower) is out of date. Your version: 2.7.0 latest: 2.8.2
+>> require-handlebars-plugin (bower) is up to date.
+>> stringjs (bower) is out of date. Your version: 1.8.1 latest: 1.9.1
+>> typeahead.js (bower) is out of date. Your version: 0.10.2 latest: 0.10.5
+>> colors (npm) is up to date.
+>> bower (npm) is up to date.
+>> npm (npm) is up to date.
+>> async (npm) is up to date.
+>> lodash (npm) is up to date.
+>> grunt-contrib-jshint (npm) is out of date. Your version: ^0.9.2 latest: 0.10.0
+>> grunt (npm) is up to date.
 ```
-
-## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
-
-## Release History
-_(Nothing yet)_
