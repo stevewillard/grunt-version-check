@@ -1,6 +1,6 @@
 # grunt-version-check
 
-> Checks if your Bower dependencies are out of date.
+> Checks if your Bower or NPM dependencies are out of date.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
