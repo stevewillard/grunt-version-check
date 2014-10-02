@@ -58,11 +58,13 @@ module.exports = function(grunt) {
 
         var options = this.options({
             skip : [],
-            hideUpToDate: false
+            hideUpToDate: false,
+            packageLocation: "package.json",
+            bowerLocation: "bower.json"
         });
-
-        var allDependencies = componentFileToMetadatas("bower", readFile(grunt, "bower.json"))
-                      .concat(componentFileToMetadatas("npm",   readFile(grunt, "package.json")));
+        
+        var allDependencies = componentFileToMetadatas("bower", readFile(grunt, options.bowerLocation))
+                      .concat(componentFileToMetadatas("npm",   readFile(grunt, options.packageLocation)));
 
         // Skip dependencies
         allDependencies = _.reject(allDependencies, function(dependency) {

@@ -47,6 +47,18 @@ Default value: `false`
 
 If true, only dependencies that are out of date will be listed.
 
+#### options.bowerLocation
+Type: `String`
+Default value: `bower.json`
+
+Specify a relative path to a bower.json file.
+
+#### options.packageLocation
+Type: `String`
+Default value: `package.json`
+
+Specify a relative path to a package.json file.
+
 ### Example output
 ```
 Running "versioncheck" task
