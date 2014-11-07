@@ -108,14 +108,17 @@ module.exports = function(grunt) {
 
         _.each(allDependencies, function(dependency) {
             var version = dependency.version;
-
-            switch (dependency.type) {
-                case "bower":
-                    dependencyCalls.push(bowerCallback(dependency));
-                    break;
-                case "npm":
-                    dependencyCalls.push(npmCallback(dependency));
-                    break;
+  
+            // Make sure the version string is readable by semver 
+            if(semver.validRange(version)) {
+                switch (dependency.type) {
+                    case "bower":
+                        dependencyCalls.push(bowerCallback(dependency));
+                        break;
+                    case "npm":
+                        dependencyCalls.push(npmCallback(dependency));
+                        break;
+                }
             }
         });
 
