@@ -50,6 +50,36 @@ function readFile(grunt, file) {
     return grunt.file.exists(file) ? grunt.file.readJSON(file) : {};
 }
 
+function bowerCallback(dependency) {
+    return function(callback) {
+        bower.commands
+            .info(dependency.name, "")
+            .on("end", function(results) {
+                var latest = results.versions[0];
+
+                callback(null, _.merge({
+                    latest : latest,
+                    upToDate : semver.satisfies(latest, dependency.version)
+                }, dependency));
+            });
+    };
+}
+
+function npmCallback(dependency) {
+    return function(callback) {
+        npm.commands.info([dependency.name, "version"], function(err, data) {
+            // Data is structured as: { '1.2.1': { version: '1.2.1' } }
+            // So get the first key of the object
+            var latest = data[Object.keys(data)[0]].version;
+
+            callback(null, _.merge({
+                latest : latest,
+                upToDate : semver.satisfies(latest, dependency.version)
+            }, dependency));
+        });
+    };
+}
+
 module.exports = function(grunt) {
 
     grunt.registerTask("versioncheck", "Checks if your NPM or Bower dependencies are out of date.", function() {
@@ -78,36 +108,17 @@ module.exports = function(grunt) {
 
         _.each(allDependencies, function(dependency) {
             var version = dependency.version;
-
-            switch (dependency.type) {
-                case "bower":
-                    dependencyCalls.push(function(callback) {
-                        bower.commands
-                            .info(dependency.name, "")
-                            .on("end", function(results) {
-                                var latest = results.versions[0];
-
-                                callback(null, _.merge({
-                                    latest : latest,
-                                    upToDate : semver.satisfies(latest, version)
-                                }, dependency));
-                            });
-                    });
-                    break;
-                case "npm":
-                    dependencyCalls.push(function(callback) {
-                        npm.commands.info([dependency.name, "version"], function(err, data) {
-                            // Data is structured as: { '1.2.1': { version: '1.2.1' } }
-                            // So get the first key of the object
-                            var latest = data[Object.keys(data)[0]].version;
-
-                            callback(null, _.merge({
-                                latest : latest,
-                                upToDate : semver.satisfies(latest, version)
-                            }, dependency));
-                        });
-                    });
-                    break;
+  
+            // Make sure the version string is readable by semver 
+            if(semver.validRange(version)) {
+                switch (dependency.type) {
+                    case "bower":
+                        dependencyCalls.push(bowerCallback(dependency));
+                        break;
+                    case "npm":
+                        dependencyCalls.push(npmCallback(dependency));
+                        break;
+                }
             }
         });
 
