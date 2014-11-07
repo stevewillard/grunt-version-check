@@ -59,7 +59,7 @@ function bowerCallback(dependency) {
 
                 callback(null, _.merge({
                     latest : latest,
-                    upToDate : semver.satisfies(latest, version)
+                    upToDate : semver.satisfies(latest, dependency.version)
                 }, dependency));
             });
     };
@@ -74,7 +74,7 @@ function npmCallback(dependency) {
 
             callback(null, _.merge({
                 latest : latest,
-                upToDate : semver.satisfies(latest, version)
+                upToDate : semver.satisfies(latest, dependency.version)
             }, dependency));
         });
     };
