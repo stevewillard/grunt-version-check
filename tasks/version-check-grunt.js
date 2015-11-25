@@ -68,10 +68,13 @@ function bowerCallback(dependency) {
 function npmCallback(dependency) {
   return function(callback) {
     npm.commands.info([dependency.name, 'version'], true, function(err, data) {
-      // Data is structured as: { '1.2.1': { version: '1.2.1' } } so get the first key of the object
       if (!data || !Object.keys(data).length) {
-        return callback(null, null);
+        return callback(null, _.merge({
+          latest : "unknown",
+          upToDate : true
+        }, dependency));
       }
+      // Data is structured as: { '1.2.1': { version: '1.2.1' } } so get the first key of the object
       var latest = data[Object.keys(data)[0]].version;
 
       callback(null, _.merge({
