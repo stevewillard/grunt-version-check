@@ -70,7 +70,7 @@ function npmCallback(dependency) {
     npm.commands.info([dependency.name, 'version'], true, function(err, data) {
       if (!data || !Object.keys(data).length) {
         return callback(null, _.merge({
-          latest : "unknown",
+          latest : 'unknown',
           upToDate : true
         }, dependency));
       }
