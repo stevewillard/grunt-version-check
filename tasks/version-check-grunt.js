@@ -90,7 +90,7 @@ function sortFunc(dep) {
 }
 
 module.exports = function(grunt) {
-  grunt.registerTask('versioncheck', 'Checks if your NPM or Bower dependencies are out of date.', function() {
+  grunt.registerMultiTask('versioncheck', 'Checks if your NPM or Bower dependencies are out of date.', function() {
     var done = this.async(),
     dependencyCalls = [];
 
@@ -100,7 +100,13 @@ module.exports = function(grunt) {
       packageLocation: 'package.json',
       bowerLocation: 'bower.json'
     });
-    
+
+    // Check if multi task options are defined
+    if(this.data.skip){ options.skip = this.data.skip }
+    if(this.data.hideUpToDate){ options.hideUpToDate = this.data.hideUpToDate }
+    if(this.data.packageLocation){ options.packageLocation = this.data.packageLocation }
+    if(this.data.bowerLocation){ options.bowerLocation = this.data.bowerLocation }
+
     var allDependencies = componentFileToMetadatas('bower', readFile(grunt, options.bowerLocation))
       .concat(componentFileToMetadatas('npm', readFile(grunt, options.packageLocation)));
 
