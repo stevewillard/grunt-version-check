@@ -1,7 +1,7 @@
 {
   "name": "grunt-version-check",
   "description": "Checks if your NPM or Bower dependencies are out of date.",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "homepage": "https://github.com/stevewillard/grunt-version-check",
   "author": {
     "name": "Steve Willard",
