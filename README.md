@@ -25,9 +25,11 @@ In your project's Gruntfile, add a section named `versioncheck` to the data obje
 ```js
 grunt.initConfig({
   versioncheck: {
-    options: {
-      skip : ["semver", "npm", "lodash"],
-      hideUpToDate : false
+    target: {
+      options: {
+        skip : ["semver", "npm", "lodash"],
+        hideUpToDate : false
+      }
     }
   },
 });
