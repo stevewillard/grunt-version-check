@@ -102,10 +102,21 @@ module.exports = function(grunt) {
     });
 
     // Check if multi task options are defined
-    if(this.data.skip){ options.skip = this.data.skip }
-    if(this.data.hideUpToDate){ options.hideUpToDate = this.data.hideUpToDate }
-    if(this.data.packageLocation){ options.packageLocation = this.data.packageLocation }
-    if(this.data.bowerLocation){ options.bowerLocation = this.data.bowerLocation }
+    if (this.data.skip) {
+      options.skip = this.data.skip;
+    }
+
+    if (this.data.hideUpToDate) {
+      options.hideUpToDate = this.data.hideUpToDate;
+    }
+
+    if (this.data.packageLocation) {
+      options.packageLocation = this.data.packageLocation;
+    }
+
+    if (this.data.bowerLocation) {
+      options.bowerLocation = this.data.bowerLocation;
+    }
 
     var allDependencies = componentFileToMetadatas('bower', readFile(grunt, options.bowerLocation))
       .concat(componentFileToMetadatas('npm', readFile(grunt, options.packageLocation)));
