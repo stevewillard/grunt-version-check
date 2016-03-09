@@ -16,11 +16,13 @@ module.exports = function(grunt) {
     },
 
     versioncheck : {
-      options : {
-        skip : ['semver'],
-        hideUpToDate : false,
-        packageLocation : 'files/package.json',
-        bowerLocation : 'files/bower.json'
+      main: {
+        options : {
+          skip : ['semver'],
+          hideUpToDate : false,
+          packageLocation : 'files/package.json',
+          bowerLocation : 'files/bower.json'
+        }
       }
     }
   });
