@@ -61,6 +61,12 @@ Default value: `package.json`
 
 Specify a relative path to a package.json file.
 
+#### options.showPrerelease
+Type: `Boolean`
+Default value: `false`
+
+If true, versions of bower dependencies are compared to prereleased versions and not the last stable version.
+
 ### Example output
 ```
 Running "versioncheck" task
