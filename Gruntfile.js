@@ -20,6 +20,7 @@ module.exports = function(grunt) {
         options : {
           skip : ['semver'],
           hideUpToDate : false,
+          showPrerelease : false,
           packageLocation : 'files/package.json',
           bowerLocation : 'files/bower.json'
         }

@@ -50,12 +50,15 @@ function readFile(grunt, file) {
   return grunt.file.exists(file) ? grunt.file.readJSON(file) : {};
 }
 
-function bowerCallback(dependency) {
+function bowerCallback(dependency, showPrerelease) {
   return function(callback) {
     bower.commands
     .info(dependency.name, '')
     .on('end', function(results) {
-      var latest = results.versions[0];
+      var latest = results.latest.version;
+      if (showPrerelease) {
+          latest = results.versions[0];
+      }
 
       callback(null, _.merge({
         latest : latest,
@@ -67,7 +70,7 @@ function bowerCallback(dependency) {
 
 function npmCallback(dependency) {
   return function(callback) {
-    npm.commands.info([dependency.name, 'version'], true, function(err, data) {
+    npm.commands.view([dependency.name, 'version'], true, function(err, data) {
       if (!data || !Object.keys(data).length) {
         return callback(null, _.merge({
           latest : 'unknown',
@@ -98,7 +101,8 @@ module.exports = function(grunt) {
       skip : [],
       hideUpToDate: false,
       packageLocation: 'package.json',
-      bowerLocation: 'bower.json'
+      bowerLocation: 'bower.json',
+      showPrerelease: false
     });
 
     // Check if multi task options are defined
@@ -117,6 +121,10 @@ module.exports = function(grunt) {
     if (this.data.bowerLocation) {
       options.bowerLocation = this.data.bowerLocation;
     }
+    
+    if (this.data.showPrerelease) {
+      options.showPrerelease = this.data.showPrerelease;
+    }
 
     var allDependencies = componentFileToMetadatas('bower', readFile(grunt, options.bowerLocation))
       .concat(componentFileToMetadatas('npm', readFile(grunt, options.packageLocation)));
@@ -133,7 +141,7 @@ module.exports = function(grunt) {
       if (semver.validRange(version)) {
         switch (dependency.type) {
           case 'bower':
-            dependencyCalls.push(bowerCallback(dependency));
+            dependencyCalls.push(bowerCallback(dependency, options.showPrerelease));
             break;
           case 'npm':
             dependencyCalls.push(npmCallback(dependency));
