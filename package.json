@@ -20,10 +20,12 @@
     "bower": "^1.5.2",
     "colors": "^1.1.2",
     "grunt": ">=0.4.5",
-    "grunt-contrib-jshint": "^0.11.3",
     "lodash": "^3.10.1",
     "npm": "^2.14.2",
     "semver": "^5.0.1"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "^0.11.3"
   },
   "keywords": [
     "gruntplugin",
