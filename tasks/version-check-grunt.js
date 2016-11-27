@@ -152,7 +152,7 @@ module.exports = function(grunt) {
 
     npm.load({}, function() {
       async.parallel(dependencyCalls, function(err, results) {
-		    var allValid = true;
+        var allValid = true;
 
         _.each(_.sortBy(results, sortFunc), function(result) {
           if (!result.upToDate) {
