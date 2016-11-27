@@ -16,7 +16,7 @@ require('colors');
 
 /*
   Takes either a bower.json or package.json and returns some metadata about each object
-   
+
   Input: (bower.json)
   { name: "my-bower-component", dependencies: {"foo" : "1.2.3"}, devDependencies: {"bar" : "4.5.6"} }
 
@@ -121,7 +121,7 @@ module.exports = function(grunt) {
     if (this.data.bowerLocation) {
       options.bowerLocation = this.data.bowerLocation;
     }
-    
+
     if (this.data.showPrerelease) {
       options.showPrerelease = this.data.showPrerelease;
     }
@@ -137,7 +137,7 @@ module.exports = function(grunt) {
     _.each(allDependencies, function(dependency) {
       var version = dependency.version;
 
-      // Make sure the version string is readable by semver 
+      // Make sure the version string is readable by semver
       if (semver.validRange(version)) {
         switch (dependency.type) {
           case 'bower':
@@ -152,8 +152,12 @@ module.exports = function(grunt) {
 
     npm.load({}, function() {
       async.parallel(dependencyCalls, function(err, results) {
+		    var allValid = true;
+
         _.each(_.sortBy(results, sortFunc), function(result) {
           if (!result.upToDate) {
+            allValid = false;
+
             grunt.log.warn(result.name +
               (' (' + result.type + ')' + ' is out of date. Your version: ' + result.version + ' latest: ' + result.latest).yellow);
           } else {
@@ -162,8 +166,8 @@ module.exports = function(grunt) {
             }
           }
         });
-        
-        done();
+
+        done(allValid);
       });
     });
 
